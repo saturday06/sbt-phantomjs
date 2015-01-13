@@ -23,7 +23,7 @@ $ sbt installPhantomJs
 ```
 
 - Install PhantomJS to `target/phantomjs/`
-- Write the properties file for Selenium PhantomJS Driver to ...
+- Write properties for Selenium PhantomJS Driver to ...
   - `target/phantomjs.properties` file
   - System Property using `System.setProperty()`
   - `javaOptions` of sbt
