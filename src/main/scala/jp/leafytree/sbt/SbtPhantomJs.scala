@@ -1,6 +1,7 @@
 package jp.leafytree.sbt
 
 import java.io.File
+import java.io.FileInputStream
 import java.nio.charset.Charset
 import java.util.Properties
 
@@ -12,6 +13,7 @@ import collection.JavaConversions._
 object SbtPhantomJs extends AutoPlugin {
   object autoImport {
     lazy val installPhantomJs = taskKey[Unit]("Install PhantomJS")
+    lazy val checkInstalledPhantomJs = taskKey[Unit]("Check installed PhantomJS")
   }
   import autoImport._
 
@@ -26,6 +28,21 @@ object SbtPhantomJs extends AutoPlugin {
         System.setProperty(key, value)
         javaOptions += f"-D${key}=${value}" // TODO: empty character?
       }}
+    },
+
+    checkInstalledPhantomJs := {
+      val properties = new Properties()
+      val inputStream = new java.io.FileInputStream("target/phantomjs.properties")
+      try {
+        properties.load(inputStream)
+      } finally {
+        inputStream.close()
+      }
+      val command = Array(properties.getProperty("phantomjs.binary.path"), "--version")
+      val result = scala.sys.process.Process(command).run.exitValue
+      if (result != 0) {
+        sys.error("PhantomJS execution failure")
+      }
     }
   )
 }

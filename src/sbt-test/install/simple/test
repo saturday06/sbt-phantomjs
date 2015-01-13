@@ -1,1 +1,4 @@
 > installPhantomJs
+$ exists target/phantomjs/
+$ exists target/phantomjs.properties
+> checkInstalledPhantomJs
