@@ -14,6 +14,8 @@ sonatypeSettings
 
 ScriptedPlugin.scriptedSettings
 
+scriptedLaunchOpts := { scriptedLaunchOpts.value ++ Seq("-Dplugin.version=" + version.value) }
+
 libraryDependencies ++= Seq(
   "org.apache.maven.shared" % "maven-invoker" % "2.1.1"
 )
