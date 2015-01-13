@@ -2,7 +2,7 @@
 
 An automated PhantomJS Installer for sbt
 
-# Setup
+## Setup
 
 `project/plugins.sbt`
 ```scala
@@ -14,9 +14,9 @@ addSbtPlugin("jp.leafytree.sbt" % "sbt-phantomjs" % "0.1.1")
 val rootProject = (project in file(".")).enablePlugins(SbtPhantomJs)
 ```
 
-# Tasks
+## Tasks
 
-## installPhantomJs task
+### installPhantomJs task
 
 ```bash
 $ sbt installPhantomJs
