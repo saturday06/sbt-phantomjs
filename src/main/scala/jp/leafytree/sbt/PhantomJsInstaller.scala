@@ -62,7 +62,7 @@ object PhantomJsInstaller {
     resolver.setM2compatible(true)
     resolver.setName("central")
     resolver.addArtifactPattern(
-      "http://repo1.maven.org/maven2/[organisation]/[module]/[revision]/[artifact](-[revision]).[ext]")
+      "http://repo1.maven.org/maven2/[organisation]/[module]/[revision]/[artifact]-[revision](-[classifier]).[ext]")
     ivySettings.addResolver(resolver)
     ivySettings.setDefaultResolver(resolver.getName())
     val ivy = Ivy.newInstance(ivySettings)
