@@ -1,4 +1,4 @@
-# sbt-phantomjs
+# sbt-phantomjs  [![Build Status](https://travis-ci.org/saturday06/sbt-phantomjs.png?branch=master)](https://travis-ci.org/saturday06/sbt-phantomjs)
 
 An automated PhantomJS Installer for sbt
 
