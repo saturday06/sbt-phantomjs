@@ -2,4 +2,4 @@ resolvers += "Typesafe repository" at "http://repo.typesafe.com/typesafe/release
 
 addSbtPlugin("com.typesafe.play" % "sbt-plugin" % "2.3.7")
 
-addSbtPlugin("jp.leafytree.sbt" % "sbt-phantomjs" % "0.1")
+addSbtPlugin("jp.leafytree.sbt" % "sbt-phantomjs" % "0.1.1")
