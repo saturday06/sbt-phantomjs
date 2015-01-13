@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ivy-module version="2.0" xmlns:m="http://ant.apache.org/ivy/maven">
+    <info organisation="jp.leafytree.sbt" module="sbt-phantomjs"/>
+    <dependencies>
+        <dependency org="org.apache.maven" name="apache-maven" rev="3.2.3">
+            <artifact name="apache-maven" type="zip" m:classifier="bin" />
+        </dependency>
+    </dependencies>
+</ivy-module>

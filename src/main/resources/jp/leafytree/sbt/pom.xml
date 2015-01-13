@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <groupId>jp.leafytree.sbt</groupId>
+    <artifactId>phantomjs-installer-for-sbt</artifactId>
+    <packaging>pom</packaging>
+    <version>1.0</version>
+    <name>PhantomJS Installer for SBT</name>
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>com.github.klieber</groupId>
+                <artifactId>phantomjs-maven-plugin</artifactId>
+                <version>0.4</version>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>install</goal>
+                        </goals>
+                    </execution>
+                </executions>
+                <configuration>
+                    <version>1.9.8</version>
+                    <outputDirectory>${sbtphantomjs.outputDir}/phantomjs</outputDirectory>
+                </configuration>
+            </plugin>
+            <plugin>
+                <artifactId>maven-antrun-plugin</artifactId>
+                <version>1.7</version>
+                <executions>
+                    <execution>
+                        <phase>package</phase>
+                        <configuration>
+                            <target>
+                                <propertyfile file="${sbtphantomjs.outputDir}/phantomjs.properties">
+                                    <entry  key="phantomjs.binary.path" value="${phantomjs.binary}"/>
+                                </propertyfile>
+                            </target>
+                        </configuration>
+                        <goals>
+                            <goal>run</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+        </plugins>
+    </build>
+</project>
