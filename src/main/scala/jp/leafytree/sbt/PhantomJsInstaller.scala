@@ -29,13 +29,14 @@ object PhantomJsInstaller {
     }
     new File(mavenHome, "bin" + File.separator + "mvn").setExecutable(true, true)
 
+    val pomSource = Source.fromURL(getClass.getResource("pom.xml"))
+    val pomString = try {
+      pomSource.mkString
+    } finally {
+      pomSource.close()
+    }
+
     IO.withTemporaryFile("pom-", ".xml") { pomFile =>
-      val pomSource = Source.fromURL(getClass.getResource("pom.xml"))
-      val pomString = try {
-        pomSource.mkString
-      } finally {
-        pomSource.close()
-      }
       IO.write(pomFile, pomString, Charset.forName("UTF-8"))
 
       val request = new DefaultInvocationRequest()
@@ -48,12 +49,12 @@ object PhantomJsInstaller {
       val invoker = new DefaultInvoker()
       invoker.setMavenHome(mavenHome)
       invoker.execute(request)
-
-      if (!propertiesFile.exists()) {
-        throw new RuntimeException("mvn failed")
-      }
-      return propertiesFile
     }
+
+    if (!propertiesFile.exists()) {
+      throw new RuntimeException("mvn failed")
+    }
+    return propertiesFile
   }
 
   def getMavenArchiveFile(): Option[File] = {
