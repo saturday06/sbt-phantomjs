@@ -21,9 +21,7 @@ object SbtPhantomJs extends AutoPlugin {
     installPhantomJs := {
       val propertiesFile = PhantomJsInstaller.install(baseDirectory.value / "target")
       val properties = new Properties()
-      IO.reader(propertiesFile, Charset.forName("UTF-8"))(reader => {
-        properties.load(reader)
-      })
+      IO.reader(propertiesFile, Charset.forName("UTF-8")){ properties.load(_) }
       properties.foreach { case (key, value) => {
         System.setProperty(key, value)
         javaOptions += f"-D${key}=${value}" // TODO: empty character?
@@ -31,13 +29,9 @@ object SbtPhantomJs extends AutoPlugin {
     },
 
     checkInstalledPhantomJs := {
+      val propertiesFile = baseDirectory.value / "target" / "phantomjs.properties"
       val properties = new Properties()
-      val inputStream = new java.io.FileInputStream("target/phantomjs.properties")
-      try {
-        properties.load(inputStream)
-      } finally {
-        inputStream.close()
-      }
+      IO.reader(propertiesFile, Charset.forName("UTF-8")){ properties.load(_) }
       val command = Array(properties.getProperty("phantomjs.binary.path"), "--version")
       val result = scala.sys.process.Process(command).run.exitValue
       if (result != 0) {
