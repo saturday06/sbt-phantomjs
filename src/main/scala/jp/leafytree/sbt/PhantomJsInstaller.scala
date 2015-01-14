@@ -42,7 +42,7 @@ object PhantomJsInstaller {
     val unzipDir = IO.createTemporaryDirectory
     IO.unzip(mavenArchiveFile, unzipDir)
     val mavenHome = unzipDir.listFiles().filter(_.isDirectory).sortBy(_.getName).lastOption.getOrElse {
-      throw new RuntimeException("no dir!")
+      sys.error("no dir!")
     }
     new File(mavenHome, "bin" + File.separator + "mvn").setExecutable(true, true)
     mavenHome
@@ -57,7 +57,7 @@ object PhantomJsInstaller {
     executeMaven(installMaven(mavenArchiveFile()), outputDirectory)
 
     if (!propertiesFile.exists()) {
-      throw new RuntimeException("mvn failed")
+      sys.error("mvn failed")
     }
     return propertiesFile
   }
@@ -91,6 +91,6 @@ object PhantomJsInstaller {
         }
       })
     }
-    throw new RuntimeException("no maven!")
+    sys.error("no maven!")
   }
 }
