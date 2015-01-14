@@ -54,12 +54,7 @@ object PhantomJsInstaller {
       return propertiesFile
     }
 
-    val mavenArchiveFile = getMavenArchiveFile().getOrElse {
-      throw new RuntimeException("no maven!")
-    }
-
-    val mavenHome = installMaven(mavenArchiveFile)
-    executeMaven(mavenHome, outputDirectory)
+    executeMaven(installMaven(mavenArchiveFile()), outputDirectory)
 
     if (!propertiesFile.exists()) {
       throw new RuntimeException("mvn failed")
@@ -67,7 +62,7 @@ object PhantomJsInstaller {
     return propertiesFile
   }
 
-  def getMavenArchiveFile(): Option[File] = {
+  def mavenArchiveFile(): File = {
     val ivySettings = new IvySettings()
     val resolver = new URLResolver()
     resolver.setM2compatible(true)
@@ -92,10 +87,10 @@ object PhantomJsInstaller {
         if (artifact.getExt() == "zip"
           && artifact.getName() == "apache-maven"
           && artifact.getModuleRevisionId().getOrganisation == "org.apache.maven") {
-          return Some(f.getLocalFile())
+          return f.getLocalFile()
         }
       })
     }
-    return None
+    throw new RuntimeException("no maven!")
   }
 }
