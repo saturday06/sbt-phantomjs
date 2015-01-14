@@ -14,21 +14,7 @@ import sbt.IO
 import scala.io.Source
 
 object PhantomJsInstaller {
-  def install(outputDirectory: File): File = {
-    val propertiesFile = new File(outputDirectory, "phantomjs.properties")
-    if (propertiesFile.exists()) {
-      return propertiesFile
-    }
-    val mavenArchiveFile = getMavenArchiveFile().getOrElse {
-      throw new RuntimeException("no maven!")
-    }
-    val unzipDir = IO.createTemporaryDirectory
-    IO.unzip(mavenArchiveFile, unzipDir)
-    val mavenHome = unzipDir.listFiles().filter(_.isDirectory).sortBy(_.getName).lastOption.getOrElse {
-      throw new RuntimeException("no dir!")
-    }
-    new File(mavenHome, "bin" + File.separator + "mvn").setExecutable(true, true)
-
+  def executeMaven(mavenHome: File, outputDirectory: File): Unit = {
     val pomSource = Source.fromURL(getClass.getResource("pom.xml"))
     val pomString = try {
       pomSource.mkString
@@ -50,6 +36,30 @@ object PhantomJsInstaller {
       invoker.setMavenHome(mavenHome)
       invoker.execute(request)
     }
+  }
+
+  def installMaven(mavenArchiveFile: File): File = {
+    val unzipDir = IO.createTemporaryDirectory
+    IO.unzip(mavenArchiveFile, unzipDir)
+    val mavenHome = unzipDir.listFiles().filter(_.isDirectory).sortBy(_.getName).lastOption.getOrElse {
+      throw new RuntimeException("no dir!")
+    }
+    new File(mavenHome, "bin" + File.separator + "mvn").setExecutable(true, true)
+    mavenHome
+  }
+
+  def install(outputDirectory: File): File = {
+    val propertiesFile = new File(outputDirectory, "phantomjs.properties")
+    if (propertiesFile.exists()) {
+      return propertiesFile
+    }
+
+    val mavenArchiveFile = getMavenArchiveFile().getOrElse {
+      throw new RuntimeException("no maven!")
+    }
+
+    val mavenHome = installMaven(mavenArchiveFile)
+    executeMaven(mavenHome, outputDirectory)
 
     if (!propertiesFile.exists()) {
       throw new RuntimeException("mvn failed")
