@@ -41,7 +41,7 @@ object PhantomJsInstaller {
 
       val request = new DefaultInvocationRequest()
       request.setPomFile(pomFile)
-      request.setGoals(java.util.Arrays.asList("install"))
+      request.setGoals(java.util.Arrays.asList("package"))
       val properties = new Properties()
       properties.put("sbtphantomjs.outputDir", outputDirectory.getCanonicalPath())
       request.setProperties(properties)
