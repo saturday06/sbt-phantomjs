@@ -8,7 +8,7 @@ organization := "jp.leafytree.sbt"
 
 profileName := "jp.leafytree"
 
-version := "0.1.3"
+version := "0.1.4-SNAPSHOT"
 
 sonatypeSettings
 
