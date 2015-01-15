@@ -1,3 +1,3 @@
-val rootProject = (project in file(".")).enablePlugins(jp.leafytree.sbt.SbtPhantomJs)
+val rootProject = (project in file(".")).enablePlugins(PhantomJs)
 
 (run in Compile) <<= (run in Compile) dependsOn (installPhantomJs)

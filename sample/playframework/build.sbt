@@ -2,7 +2,7 @@ libraryDependencies += "com.github.detro.ghostdriver" % "phantomjsdriver" % "1.1
 
 lazy val sample = Project(
   "sample", file(".")
-).enablePlugins(PlayScala, SbtPhantomJs).settings(
+).enablePlugins(PlayScala, PhantomJs).settings(
   scalaVersion := "2.11.4"
 )
 

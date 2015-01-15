@@ -6,12 +6,12 @@ An automated PhantomJS Installer for sbt
 
 `project/plugins.sbt`
 ```scala
-addSbtPlugin("jp.leafytree.sbt" % "sbt-phantomjs" % "0.1.1")
+addSbtPlugin("jp.leafytree.sbt" % "sbt-phantomjs" % "0.1.2")
 ```
 
 `build.sbt`
 ```scala
-val rootProject = (project in file(".")).enablePlugins(SbtPhantomJs)
+val rootProject = (project in file(".")).enablePlugins(PhantomJs)
 ```
 
 ## Tasks
