@@ -18,6 +18,11 @@ val myProject = (project in file(".")).enablePlugins(PhantomJs)
 javaOptions ++= PhantomJs.setup(baseDirectory.value)
 ```
 
+## Samples
+- [Play Framework + specs2](https://github.com/saturday06/sbt-phantomjs/tree/master/sample/playframework)
+- [specs2](https://github.com/saturday06/sbt-phantomjs/tree/master/sample/specs2)
+- [ScalaTest](https://github.com/saturday06/sbt-phantomjs/tree/master/sample/scalatest)
+
 ## Tasks
 
 ### installPhantomJs task
