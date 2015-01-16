@@ -5,7 +5,7 @@ object Main {
     val driver = new PhantomJSDriver()
     try {
       driver.get("http://saturday06.github.io/sbt-phantomjs/test/hello.html")
-      assert(driver.findElementByTagName("title").getText() == "Hello, PhantomJS!")
+      assert(driver.getTitle() == "Hello, PhantomJS!")
     } finally {
       driver.quit()
     }

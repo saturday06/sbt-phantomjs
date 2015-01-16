@@ -6,7 +6,7 @@ class HelloSpec extends FlatSpec with Matchers {
     val driver = new PhantomJSDriver()
     try {
       driver.get("http://saturday06.github.io/sbt-phantomjs/test/hello.html")
-      driver.findElementByTagName("title").getText() should equal ("Hello, PhantomJS!")
+      driver.getTitle() should equal ("Hello, PhantomJS!")
     } finally {
       driver.quit()
     }
