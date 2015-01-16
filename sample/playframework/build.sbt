@@ -6,4 +6,4 @@ lazy val sample = Project(
   scalaVersion := "2.11.4"
 )
 
-(test in Test) <<= (test in Test) dependsOn(installPhantomJs)
+javaOptions in Test ++= PhantomJs.setup(baseDirectory.value)

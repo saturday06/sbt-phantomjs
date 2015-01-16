@@ -1,1 +1,1 @@
-addSbtPlugin("jp.leafytree.sbt" % "sbt-phantomjs" % "0.1.3")
+addSbtPlugin("jp.leafytree.sbt" % "sbt-phantomjs" % "0.1.4")
