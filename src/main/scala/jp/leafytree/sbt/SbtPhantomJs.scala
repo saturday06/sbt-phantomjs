@@ -11,5 +11,4 @@ import collection.JavaConversions._
 @deprecated("Please use `PhantomJs`")
 object SbtPhantomJs extends AutoPlugin {
   override def requires = PhantomJs
-  override def trigger = allRequirements
 }
