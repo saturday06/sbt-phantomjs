@@ -48,10 +48,16 @@ object PhantomJsInstaller {
     mavenHome
   }
 
-  def install(outputDirectory: File): File = {
+  def readProperties(file: File): Properties = {
+    val properties = new Properties()
+    IO.reader(file, Charset.forName("UTF-8")){ properties.load(_) }
+    properties
+  }
+
+  def install(outputDirectory: File): Properties = {
     val propertiesFile = new File(outputDirectory, "phantomjs.properties")
     if (propertiesFile.exists()) {
-      return propertiesFile
+      return readProperties(propertiesFile)
     }
 
     executeMaven(installMaven(mavenArchiveFile()), outputDirectory)
@@ -59,7 +65,7 @@ object PhantomJsInstaller {
     if (!propertiesFile.exists()) {
       sys.error("mvn failed")
     }
-    return propertiesFile
+    return readProperties(propertiesFile)
   }
 
   def mavenArchiveFile(): File = {
