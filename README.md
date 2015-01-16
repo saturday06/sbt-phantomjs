@@ -12,6 +12,7 @@ addSbtPlugin("jp.leafytree.sbt" % "sbt-phantomjs" % "0.1.4")
 `build.sbt`
 ```scala
 val myProject = (project in file(".")).enablePlugins(PhantomJs)
+
 javaOptions ++= PhantomJs.setup(baseDirectory.value)
 ```
 
