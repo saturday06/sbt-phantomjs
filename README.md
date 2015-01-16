@@ -11,7 +11,7 @@ addSbtPlugin("jp.leafytree.sbt" % "sbt-phantomjs" % "0.1.3")
 
 `build.sbt`
 ```scala
-val rootProject = (project in file(".")).enablePlugins(PhantomJs)
+val myProject = (project in file(".")).enablePlugins(PhantomJs)
 ```
 
 ## Tasks
