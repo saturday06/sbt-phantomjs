@@ -19,19 +19,14 @@ object PhantomJs extends AutoPlugin {
 
   override lazy val projectSettings = Seq(
     installPhantomJs := {
-      val propertiesFile = PhantomJsInstaller.install(targetDirectory(baseDirectory.value))
-      val properties = new Properties()
-      IO.reader(propertiesFile, Charset.forName("UTF-8")){ properties.load(_) }
-      properties.foreach { case (key, value) => {
+      PhantomJsInstaller.install(targetDirectory(baseDirectory.value)).foreach { case (key, value) => {
         System.setProperty(key, value)
         javaOptions += f"-D${key}=${value}" // TODO: empty character?
       }}
     },
 
     checkInstalledPhantomJs := {
-      val propertiesFile = targetDirectory(baseDirectory.value) / "phantomjs.properties"
-      val properties = new Properties()
-      IO.reader(propertiesFile, Charset.forName("UTF-8")){ properties.load(_) }
+      val properties = PhantomJsInstaller.install(targetDirectory(baseDirectory.value))
       val command = Array(properties.getProperty("phantomjs.binary.path"), "--version")
       val result = scala.sys.process.Process(command).run.exitValue
       if (result != 0) {
