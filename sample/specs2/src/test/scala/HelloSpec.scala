@@ -6,7 +6,7 @@ class HelloSpec extends Specification {
     "contain 11 characters" in {
       val driver = new PhantomJSDriver()
       try {
-        driver.get("https://saturday06.github.io/sbt-phantomjs/test/hello.html")
+        driver.get("http://saturday06.github.io/sbt-phantomjs/test/hello.html")
         driver.findElementByTagName("title").getText() must_== "Hello, PhantomJS!"
       } finally {
         driver.quit()
