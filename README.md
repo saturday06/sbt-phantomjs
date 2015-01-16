@@ -11,8 +11,10 @@ addSbtPlugin("jp.leafytree.sbt" % "sbt-phantomjs" % "0.1.4")
 
 `build.sbt`
 ```scala
+// Enable the plugin
 val myProject = (project in file(".")).enablePlugins(PhantomJs)
 
+// Install PhantomJS and add system properties definition for Selenium PhantomJS Driver to javaOptions
 javaOptions ++= PhantomJs.setup(baseDirectory.value)
 ```
 
