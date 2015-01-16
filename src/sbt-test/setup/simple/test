@@ -1,0 +1,6 @@
+> clean
+$ absent target
+> run
+$ exists target/phantomjs/
+$ exists target/phantomjs.properties
+> checkInstalledPhantomJs
