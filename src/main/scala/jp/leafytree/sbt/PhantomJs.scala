@@ -38,4 +38,11 @@ object PhantomJs extends AutoPlugin {
   private def targetDirectory(baseDirectory: File): File = {
     baseDirectory / "target"
   }
+
+  def setup(baseDirectory: File): Seq[String] = {
+    PhantomJsInstaller.install(targetDirectory(baseDirectory)).map { case (key, value) => {
+      System.setProperty(key, value)
+      f"-D${key}=${value}" // TODO: empty character?
+    }}.toSeq
+  }
 }
