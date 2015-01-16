@@ -1,5 +1,6 @@
 package jp.leafytree.sbt
 
+import java.io.File
 import java.nio.charset.Charset
 import java.util.Properties
 
@@ -18,7 +19,7 @@ object PhantomJs extends AutoPlugin {
 
   override lazy val projectSettings = Seq(
     installPhantomJs := {
-      val propertiesFile = PhantomJsInstaller.install(baseDirectory.value / "target")
+      val propertiesFile = PhantomJsInstaller.install(targetDirectory(baseDirectory.value))
       val properties = new Properties()
       IO.reader(propertiesFile, Charset.forName("UTF-8")){ properties.load(_) }
       properties.foreach { case (key, value) => {
@@ -28,7 +29,7 @@ object PhantomJs extends AutoPlugin {
     },
 
     checkInstalledPhantomJs := {
-      val propertiesFile = baseDirectory.value / "target" / "phantomjs.properties"
+      val propertiesFile = targetDirectory(baseDirectory.value) / "phantomjs.properties"
       val properties = new Properties()
       IO.reader(propertiesFile, Charset.forName("UTF-8")){ properties.load(_) }
       val command = Array(properties.getProperty("phantomjs.binary.path"), "--version")
@@ -38,4 +39,8 @@ object PhantomJs extends AutoPlugin {
       }
     }
   )
+
+  private def targetDirectory(baseDirectory: File): File = {
+    baseDirectory / "target"
+  }
 }
