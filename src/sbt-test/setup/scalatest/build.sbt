@@ -5,4 +5,4 @@ libraryDependencies ++= Seq(
   "com.github.detro.ghostdriver" % "phantomjsdriver" % "1.1.0"
 )
 
-javaOptions in Test += PhantomJs.setup(baseDirectory.value)
+javaOptions in Test ++= PhantomJs.setup(baseDirectory.value)
