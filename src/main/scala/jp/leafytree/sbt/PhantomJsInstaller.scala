@@ -14,7 +14,12 @@ import sbt.IO
 import scala.io.Source
 
 object PhantomJsInstaller {
-  def executeMaven(mavenHome: File, outputDirectory: File): Unit = {
+  def executeMaven(
+    mavenHome: File,
+    outputDirectory: File,
+    phantomJsVersion: String,
+    phantomJsMavenPluginVersion: String
+  ): Unit = {
     val pomSource = Source.fromURL(getClass.getResource("pom.xml"))
     val pomString = try {
       pomSource.mkString
@@ -30,6 +35,8 @@ object PhantomJsInstaller {
       request.setGoals(java.util.Arrays.asList("package"))
       val properties = new Properties()
       properties.put("sbtphantomjs.outputDir", outputDirectory.getCanonicalPath())
+      properties.put("sbtphantomjs.phantomJsVersion", phantomJsVersion)
+      properties.put("sbtphantomjs.mavenPluginVersion", phantomJsMavenPluginVersion)
       request.setProperties(properties)
 
       val invoker = new DefaultInvoker()
@@ -54,18 +61,27 @@ object PhantomJsInstaller {
     properties
   }
 
-  def install(outputDirectory: File): Properties = {
+  def install(
+    outputDirectory: File,
+    phantomJsVersion: String,
+    phantomJsMavenPluginVersion: String
+  ): Properties = {
     val propertiesFile = new File(outputDirectory, "phantomjs.properties")
     if (propertiesFile.exists()) {
-      return readProperties(propertiesFile)
-    }
+      readProperties(propertiesFile)
+    } else {
+      executeMaven(installMaven(
+        mavenArchiveFile()),
+        outputDirectory,
+        phantomJsVersion,
+        phantomJsMavenPluginVersion
+      )
 
-    executeMaven(installMaven(mavenArchiveFile()), outputDirectory)
-
-    if (!propertiesFile.exists()) {
-      sys.error("mvn failed")
+      if (!propertiesFile.exists()) {
+        sys.error("mvn failed")
+      }
+      readProperties(propertiesFile)
     }
-    return readProperties(propertiesFile)
   }
 
   def mavenArchiveFile(): File = {
